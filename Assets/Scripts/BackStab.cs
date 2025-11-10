@@ -19,12 +19,19 @@ public class BackStab : MonoBehaviour
         Vector3 toOther = Vector3.Normalize(transform.position - enemy.position);
         float distance = Vector3.Distance(transform.position, enemy.position);
 
-        //Debug.Log(Vector3.Dot(forward, toOther));
-        if (Vector3.Dot(forward, toOther) < -0.5f && distance < backstabDistance)
+        if (Input.GetMouseButtonDown(0))
         {
-            FrenchSpecial();
-            BackstabText();
+            if (Vector3.Dot(forward, toOther) < -0.5f && distance < backstabDistance)
+            {
+                FrenchSpecial();
+                BackstabText();
+                EndGameUI();
+            } else
+            {
+                FailBackstabText();
+            }
         }
+        
 
     }
 
@@ -49,7 +56,18 @@ public class BackStab : MonoBehaviour
 
         backstabText.text = "CRITICAL HIT!!!";
         return backstabText.text;
-        
+
+    }
+    public string FailBackstabText()
+    {
+
+        backstabText.text = "You succ";
+        return backstabText.text;
+
+    }
+    public void EndGameUI()
+    {
+        FindObjectOfType<GameManager>().EndGame();
     }
     
 }

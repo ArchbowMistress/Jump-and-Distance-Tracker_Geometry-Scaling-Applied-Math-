@@ -59,6 +59,12 @@ public class Movement : MonoBehaviour
 
     void PlayerMovement()
     {
+        //Restart Level Button
+        if (Input.GetKey("r"))
+        {
+            FindObjectOfType<GameManager>().Restart();
+        }
+
         //Max Speed Cap
         //Debug.Log(rb.velocity.magnitude);
         if (rb.velocity.magnitude > maxSpeed)
@@ -66,31 +72,42 @@ public class Movement : MonoBehaviour
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 
         }
-        
+
+        //Camera Rotation
+        if (Input.GetKey("q"))
+        {
+            // Debug.Log("is this thing working?");
+            transform.Rotate(0, -1, 0, Space.Self);
+        }
+        else if (Input.GetKey("e"))
+        {
+            // Debug.Log("is this thing working?");
+            transform.Rotate(0, 1, 0, Space.Self);
+        }
 
 
-
+        //Movement
         if (Input.GetKey("w"))
         {
             // Debug.Log("Forward");
-            rb.AddForce(0, 0, movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
+            rb.AddForce(transform.forward * movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
         }
         //Right
         if (Input.GetKey("s"))
         {
             // Debug.Log("Backward");
-            rb.AddForce(0, 0, -movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
+            rb.AddForce(transform.forward * -movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
         }
         if (Input.GetKey("a"))
         {
             // Debug.Log("Left");
-            rb.AddForce(-movementSpeed * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            rb.AddForce(transform.right * -movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
         }
         //Right
         if (Input.GetKey("d"))
         {
             // Debug.Log("Right");
-            rb.AddForce(movementSpeed * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            rb.AddForce(transform.right * movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
         }
 
         //Jump
